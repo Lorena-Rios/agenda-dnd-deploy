@@ -1,4 +1,7 @@
 import { AvailabilityMap, Player, OracleSuggestion } from "../types";
+import { drawDivineSilence } from "../constants";
+
+
 
 export const consultTheOracle = async (
   availability: AvailabilityMap,
@@ -61,8 +64,7 @@ Jogadores: ${playerNames}
     const data = await response.json();
 
     if (!response.ok) {
-      console.error("Erro vindo da API:", data);
-      throw new Error(data?.oracleMessage || "Os deuses silenciaram.");
+      throw new Error(data?.oracleMessage || "Silêncio divino");
     }
 
     return {
@@ -70,15 +72,14 @@ Jogadores: ${playerNames}
       playerCount: maxCount,
       oracleMessage: data.oracleMessage
     };
-    } catch (error: any) {
-    console.error("Erro ao consultar o Oráculo:", error);
+
+  } catch (error: any) {
+    console.warn("O Oráculo silenciou:", error.message);
 
     return {
       bestDate,
       playerCount: maxCount,
-      oracleMessage:
-        error?.message ||
-        "O panteão não se move por caprichos mortais. Retorne quando seu destino for digno."
+      oracleMessage: drawDivineSilence()
     };
   }
 };

@@ -15,3 +15,23 @@ export const MONTHS = [
 ];
 
 export const WEEKDAYS = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'];
+
+
+export const DIVINE_SILENCE_MESSAGES = [
+  "O panteão não se move por vontades pequenas. Caminhe mais, sofra mais, só então seu destino talvez seja digno de ser notado.",
+
+  "O panteão ouviu… e escolheu o silêncio. Nem todo destino merece ser iluminado.",
+
+  "Entre eras e cataclismos, sua súplica ecoou fraca demais para despertar um deus.",
+
+  "Os deuses moldam mundos, não conveniências. Retorne quando sua existência pesar sobre a balança do destino.",
+
+  "Nem toda alma merece luz, nem todo futuro deve ser revelado. Hoje, os deuses escolheram esquecer você.",
+
+  "O destino ainda não se moveu por você. E até que o faça, os deuses permanecem imóveis."
+];
+
+export function drawDivineSilence(): string {
+  const index = Math.floor(Math.random() * DIVINE_SILENCE_MESSAGES.length);
+  return DIVINE_SILENCE_MESSAGES[index];
+}
