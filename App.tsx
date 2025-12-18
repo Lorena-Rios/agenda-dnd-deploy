@@ -118,7 +118,11 @@ const App: React.FC = () => {
       <header className="bg-[#121f18] border-b border-[#3E5F4A]/30 p-6 sticky top-0 z-50 shadow-2xl">
         <div className="max-w-4xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
           <div className="flex items-center gap-3">
-            <Dices className="w-8 h-8 text-[#5a876a]" />
+                <img
+                  src="/components/d20.png"
+                  alt="Dado d20"
+                  className="w-8 h-8"
+                />
             <h1 className="text-2xl font-bold rpg-font tracking-wider uppercase text-slate-100">Costa da Espada</h1>
           </div>
           
