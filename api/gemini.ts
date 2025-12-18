@@ -10,10 +10,15 @@ export default async function handler(req, res) {
 
   const { prompt } = req.body;
 
-  const result = await model.generateContent(prompt);
-  const response = await result.response;
+const result = await model.generateContent(prompt);
 
-  res.status(200).json({
-    text: response.text()
-  });
+const text = result.response.text().trim();
+
+if (!text) {
+  throw new Error("Resposta vazia do Oráculo");
+}
+
+return res.status(200).json({
+  oracleMessage: text
+});
 }
