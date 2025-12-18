@@ -6,7 +6,7 @@ export const consultTheOracle = async (
   availability: AvailabilityMap,
   players: Player[]
 ): Promise<OracleSuggestion | null> => {
-  const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+  const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
   
   // Encontrar a data com mais jogadores
   let bestDate = "";
