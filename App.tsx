@@ -281,7 +281,7 @@ const App: React.FC = () => {
                     <div>
                         <h3 className="text-3xl font-bold rpg-font text-emerald-100 mb-2">Presságio Divino</h3>
                         <p className="text-slate-400 text-sm italic">
-                            O Oráculo avistou a data de <span className="text-emerald-400 font-bold not-italic">{oracleResult.bestDate.split('-').reverse().join('/')}</span> para o encontro de {oracleResult.playerCount} aventureiros.
+                            O Oráculo teve uma visão para a sua próxima sessão. O encontro de {oracleResult.playerCount} aventureiros.
                         </p>
                     </div>
 
