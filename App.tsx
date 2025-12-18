@@ -252,7 +252,7 @@ const App: React.FC = () => {
           </div>
         </section>
 
-        {/* <div className="flex justify-center">
+        <div className="flex justify-center">
           <button
             onClick={handleConsultOracle}
             disabled={isConsulting || Object.keys(availability).length === 0}
@@ -307,7 +307,7 @@ const App: React.FC = () => {
               </div>
             </div>
           </div>
-        )} */}
+        )}
       </main>
 
       <footer className="fixed bottom-0 left-0 right-0 p-4 pointer-events-none z-40">
