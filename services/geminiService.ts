@@ -26,30 +26,30 @@ export const consultTheOracle = async (
     .filter(Boolean)
     .join(", ");
 
-  // 3️⃣ Criar o prompt
-const prompt = `
-Você é um oráculo místico do mundo de Faerûn.
+//   // 3️⃣ Criar o prompt
+// const prompt = `
+// Você é um oráculo místico do mundo de Faerûn.
 
-Responda APENAS com o texto do presságio.
-NÃO inclua título, categoria, explicações ou aspas.
-NÃO use markdown.
-NÃO use JSON.
+// Responda APENAS com o texto do presságio.
+// NÃO inclua título, categoria, explicações ou aspas.
+// NÃO use markdown.
+// NÃO use JSON.
 
-Regras:
-- 2 frases
-- Poético
-- Use UMA entidade:
-  - Tymora (sorte)
-  - Beshaba ou Talos (azar)
-  - Oghma ou Helm (neutro)
-  - Shar ou Cyric (melhor não saber)
-- Deve indicar se é um bom presságio, mau presságio, neutro ou incerto
-- Em português
+// Regras:
+// - 2 frases
+// - Poético
+// - Use UMA entidade:
+//   - Tymora (sorte)
+//   - Beshaba ou Talos (azar)
+//   - Oghma ou Helm (neutro)
+//   - Shar ou Cyric (melhor não saber)
+// - Deve indicar se é um bom presságio, mau presságio, neutro ou incerto
+// - Em português
 
-Contexto:
-Data: ${bestDate}
-Jogadores: ${playerNames}
-`;
+// Contexto:
+// Data: ${bestDate}
+// Jogadores: ${playerNames}
+// `;
 
   // 4️⃣ Chamar a API (backend)
   try {

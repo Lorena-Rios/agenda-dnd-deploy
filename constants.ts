@@ -28,7 +28,9 @@ export const DIVINE_SILENCE_MESSAGES = [
 
   "Nem toda alma merece luz, nem todo futuro deve ser revelado. Hoje, os deuses escolheram esquecer você.",
 
-  "O destino ainda não se moveu por você. E até que o faça, os deuses permanecem imóveis."
+  "O destino ainda não se moveu por você. E até que o faça, os deuses permanecem imóveis.",
+
+  "👁"
 ];
 
 export function drawDivineSilence(): string {
