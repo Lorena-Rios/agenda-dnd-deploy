@@ -119,7 +119,7 @@ const App: React.FC = () => {
         <div className="max-w-4xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
           <div className="flex items-center gap-3">
                 <img
-                  src="components/d20.png"
+                  src="public/d20.png"
                   alt="Dado d20"
                   className="w-8 h-8"
                 />
