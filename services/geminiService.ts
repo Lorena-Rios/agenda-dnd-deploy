@@ -67,7 +67,7 @@ Jogadores: ${playerNames}
     return {
       bestDate,
       playerCount: maxCount,
-      oracleMessage: data.text
+      oracleMessage: data.oracleMessage
     };
   } catch (error) {
     console.error("Erro ao consultar o Oráculo:", error);
