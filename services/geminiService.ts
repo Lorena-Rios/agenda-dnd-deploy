@@ -47,11 +47,12 @@ O texto deve ser curto, poético e usar nomes do panteão de Faerûn.
       body: JSON.stringify({ prompt })
     });
 
-    if (!response.ok) {
-      throw new Error("Erro ao consultar o Oráculo");
-    }
-
     const data = await response.json();
+
+    if (!response.ok) {
+      console.error("Erro vindo da API:", data);
+      throw new Error(data?.details || data?.error || "Erro ao consultar o Oráculo");
+    }
 
     return {
       bestDate,
