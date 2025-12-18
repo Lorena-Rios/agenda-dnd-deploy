@@ -14,15 +14,15 @@ import {
   Calendar as CalendarIcon,
   Users,
   MapPin,
-  Database,
   Wifi,
   WifiOff,
-  Scroll
+  Scroll,
+  UserPlus
 } from 'lucide-react';
 
 const App: React.FC = () => {
   const [currentDate, setCurrentDate] = useState(new Date());
-  const [selectedPlayer, setSelectedPlayer] = useState<Player>(PLAYERS[0]);
+  const [selectedPlayer, setSelectedPlayer] = useState<Player | null>(null);
   const [availability, setAvailability] = useState<AvailabilityMap>({});
   const [oracleResult, setOracleResult] = useState<OracleSuggestion | null>(null);
   const [isConsulting, setIsConsulting] = useState(false);
@@ -35,7 +35,6 @@ const App: React.FC = () => {
     return d;
   }, []);
 
-  // Inicialização: Busca dados e assina tempo real
   useEffect(() => {
     const init = async () => {
       setIsLoading(true);
@@ -46,9 +45,7 @@ const App: React.FC = () => {
 
     init();
 
-    // Inscrição no canal místico de tempo real
     const unsubscribe = databaseService.subscribe(() => {
-      // Quando algo muda no banco, buscamos novamente para garantir sincronia
       databaseService.fetchAvailability().then(setAvailability);
     });
 
@@ -56,7 +53,7 @@ const App: React.FC = () => {
   }, []);
 
   const toggleAvailability = async (dateStr: string, isPast: boolean) => {
-    if (isPast) return;
+    if (isPast || !selectedPlayer) return;
 
     const currentAtDate = availability[dateStr] || [];
     const isAvailable = currentAtDate.includes(selectedPlayer.id);
@@ -68,10 +65,7 @@ const App: React.FC = () => {
       newPlayerIds = [...currentAtDate, selectedPlayer.id];
     }
 
-    // Atualização otimista na UI
     setAvailability(prev => ({ ...prev, [dateStr]: newPlayerIds }));
-    
-    // Persistência no Banco de Dados Central
     await databaseService.updateDate(dateStr, newPlayerIds);
   };
 
@@ -121,7 +115,6 @@ const App: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-[#0d1410] text-slate-100 pb-24 selection:bg-emerald-900 selection:text-emerald-200">
-      {/* Header */}
       <header className="bg-[#121f18] border-b border-[#3E5F4A]/30 p-6 sticky top-0 z-50 shadow-2xl">
         <div className="max-w-4xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
           <div className="flex items-center gap-3">
@@ -134,9 +127,9 @@ const App: React.FC = () => {
               <button
                 key={player.id}
                 onClick={() => setSelectedPlayer(player)}
-                className={`relative transition-all duration-300 p-0.5 rounded-full ${selectedPlayer.id === player.id ? 'ring-2 ring-emerald-400 ring-offset-2 ring-offset-[#121f18]' : ''}`}
+                className={`relative transition-all duration-300 p-0.5 rounded-full ${selectedPlayer?.id === player.id ? 'ring-2 ring-emerald-400 ring-offset-2 ring-offset-[#121f18]' : ''}`}
               >
-                <PlayerBadge player={player} active={selectedPlayer.id === player.id} />
+                <PlayerBadge player={player} active={selectedPlayer?.id === player.id} />
               </button>
             ))}
           </div>
@@ -144,7 +137,6 @@ const App: React.FC = () => {
       </header>
 
       <main className="max-w-4xl mx-auto p-4 mt-8 space-y-8">
-        {/* Status & Region */}
         <div className="flex flex-col items-center gap-4">
             <div className="flex items-center gap-2 text-emerald-500/60 font-medium text-xs tracking-[0.2em] uppercase">
                 <MapPin className="w-3 h-3" />
@@ -157,22 +149,35 @@ const App: React.FC = () => {
             </div>
         </div>
 
-        {/* Introduction Card */}
-        <section className="bg-[#16261d] border border-[#3E5F4A]/30 rounded-2xl p-6 shadow-xl relative overflow-hidden group">
-            <div className="absolute top-0 left-0 w-1 h-full bg-[#3E5F4A] group-hover:bg-emerald-400 transition-colors" />
+        <section className={`bg-[#16261d] border border-[#3E5F4A]/30 rounded-2xl p-6 shadow-xl relative overflow-hidden group transition-all duration-500 ${!selectedPlayer ? 'border-amber-500/30 bg-amber-950/10' : ''}`}>
+            <div className={`absolute top-0 left-0 w-1 h-full transition-colors ${!selectedPlayer ? 'bg-amber-500' : 'bg-[#3E5F4A] group-hover:bg-emerald-400'}`} />
             <div className="flex items-start gap-4">
-                <div className="bg-[#3E5F4A]/10 p-3 rounded-xl border border-[#3E5F4A]/20">
-                    <Scroll className="w-6 h-6 text-[#5a876a]" />
+                <div className={`p-3 rounded-xl border transition-colors ${!selectedPlayer ? 'bg-amber-500/10 border-amber-500/20' : 'bg-[#3E5F4A]/10 border-[#3E5F4A]/20'}`}>
+                    {!selectedPlayer ? <UserPlus className="w-6 h-6 text-amber-500" /> : <Scroll className="w-6 h-6 text-[#5a876a]" />}
                 </div>
                 <div>
-                    <h2 className="text-xl font-bold mb-1 text-slate-200 rpg-font tracking-wide">Saudações, {selectedPlayer.name}!</h2>
-                    <p className="text-slate-400 text-sm">Sua disponibilidade será gravada instantaneamente.</p>
+                    <h2 className="text-xl font-bold mb-1 text-slate-200 rpg-font tracking-wide">
+                      {!selectedPlayer ? 'Quem é você, viajante?' : `Saudações, ${selectedPlayer.name}!`}
+                    </h2>
+                    <p className="text-slate-400 text-sm">
+                      {!selectedPlayer 
+                        ? 'Selecione quem você é no menu superior para marcar suas datas.' 
+                        : 'Sua disponibilidade será gravada instantaneamente.'}
+                    </p>
                 </div>
             </div>
         </section>
 
-        {/* Calendar Card */}
-        <section className="bg-[#121f18] border border-[#3E5F4A]/20 rounded-3xl overflow-hidden shadow-2xl relative">
+        <section className={`bg-[#121f18] border border-[#3E5F4A]/20 rounded-3xl overflow-hidden shadow-2xl relative transition-all duration-700 ${!selectedPlayer ? 'opacity-50 blur-[1px] pointer-events-none grayscale-[0.5]' : ''}`}>
+          {!selectedPlayer && (
+            <div className="absolute inset-0 z-20 flex items-center justify-center bg-black/20 backdrop-blur-[2px]">
+               <div className="bg-[#121f18] px-6 py-3 rounded-full border border-amber-500/30 shadow-2xl flex items-center gap-3">
+                  <UserPlus className="w-4 h-4 text-amber-500 animate-bounce" />
+                  <span className="text-xs uppercase tracking-[0.2em] font-bold text-amber-500">Aguardando Escolha</span>
+               </div>
+            </div>
+          )}
+          
           <div className="bg-[#1a2b21] p-6 flex items-center justify-between border-b border-[#3E5F4A]/10">
             <h2 className="text-xl font-bold rpg-font flex items-center gap-2 text-slate-200">
               <CalendarIcon className="w-5 h-5 text-[#5a876a]" />
@@ -203,14 +208,14 @@ const App: React.FC = () => {
                 
                 const dateStr = formatDate(date);
                 const availableIds = availability[dateStr] || [];
-                const isSelectedPlayerAvailable = availableIds.includes(selectedPlayer.id);
+                const isSelectedPlayerAvailable = selectedPlayer ? availableIds.includes(selectedPlayer.id) : false;
                 const isToday = formatDate(today) === dateStr;
                 const isPast = date < today;
 
                 return (
                   <button
                     key={dateStr}
-                    disabled={isPast}
+                    disabled={isPast || !selectedPlayer}
                     onClick={() => toggleAvailability(dateStr, isPast)}
                     className={`group relative aspect-square rounded-xl md:rounded-2xl transition-all duration-300 border-2 overflow-hidden flex flex-col items-center justify-center p-1 md:p-2
                       ${isPast 
@@ -243,8 +248,7 @@ const App: React.FC = () => {
           </div>
         </section>
 
-        {/* Oracle Section */}
-        <div className="flex justify-center">
+        {/* <div className="flex justify-center">
           <button
             onClick={handleConsultOracle}
             disabled={isConsulting || Object.keys(availability).length === 0}
@@ -299,10 +303,9 @@ const App: React.FC = () => {
               </div>
             </div>
           </div>
-        )}
+        )} */}
       </main>
 
-      {/* Footer Info */}
       <footer className="fixed bottom-0 left-0 right-0 p-4 pointer-events-none z-40">
         <div className="max-w-4xl mx-auto flex justify-center">
             <div className="bg-[#0d1410]/95 border border-[#3E5F4A]/30 backdrop-blur-md px-6 py-2 rounded-full shadow-2xl pointer-events-auto flex items-center gap-3">
