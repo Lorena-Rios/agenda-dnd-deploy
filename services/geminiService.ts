@@ -11,20 +11,20 @@ export const consultTheOracle = async (
   let bestDate = "";
   let maxCount = -1;
 
-  Object.entries(availability).forEach(([date, ids]) => {
-    if (ids.length > maxCount) {
-      maxCount = ids.length;
-      bestDate = date;
-    }
-  });
+  // Object.entries(availability).forEach(([date, ids]) => {
+  //   if (ids.length > maxCount) {
+  //     maxCount = ids.length;
+  //     bestDate = date;
+  //   }
+  // });
 
-  if (!bestDate || maxCount === 0) return null;
+  // if (!bestDate || maxCount === 0) return null;
 
-  // 2️⃣ Resolver nomes dos jogadores
-  const playerNames = availability[bestDate]
-    .map(id => players.find(p => p.id === id)?.name)
-    .filter(Boolean)
-    .join(", ");
+  // // 2️⃣ Resolver nomes dos jogadores
+  // const playerNames = availability[bestDate]
+  //   .map(id => players.find(p => p.id === id)?.name)
+  //   .filter(Boolean)
+  //   .join(", ");
 
 //   // 3️⃣ Criar o prompt
 // const prompt = `
