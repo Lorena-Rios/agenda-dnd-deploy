@@ -62,7 +62,7 @@ Jogadores: ${playerNames}
 
     if (!response.ok) {
       console.error("Erro vindo da API:", data);
-      throw new Error(data.oracleMessage || "O panteão não se move por caprichos mortais. Retorne quando seu destino for digno.");
+      throw new Error(data?.oracleMessage || "Os deuses silenciaram.");
     }
 
     return {
@@ -70,8 +70,15 @@ Jogadores: ${playerNames}
       playerCount: maxCount,
       oracleMessage: data.oracleMessage
     };
-  } catch (error) {
+    } catch (error: any) {
     console.error("Erro ao consultar o Oráculo:", error);
-    return null;
+
+    return {
+      bestDate,
+      playerCount: maxCount,
+      oracleMessage:
+        error?.message ||
+        "O panteão não se move por caprichos mortais. Retorne quando seu destino for digno."
+    };
   }
 };
