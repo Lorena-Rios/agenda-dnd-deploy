@@ -10,10 +10,16 @@ export default async function handler(req, res) {
 
   const { prompt } = req.body;
 
-  const result = await model.generateContent(prompt);
-  const response = await result.response;
+const result = await model.generateContent(prompt);
 
-  res.status(200).json({
-    text: response.text()
-  });
+const rawText = result.response.text();
+
+// Segurança extra
+const jsonStart = rawText.indexOf("{");
+const jsonEnd = rawText.lastIndexOf("}") + 1;
+
+const parsed = JSON.parse(rawText.slice(jsonStart, jsonEnd));
+
+return res.status(200).json(parsed);
+
 }

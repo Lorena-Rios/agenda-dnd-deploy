@@ -25,17 +25,30 @@ export const consultTheOracle = async (
 
   // 3️⃣ Criar o prompt
   const prompt = `
-Estamos organizando uma sessão de RPG em Faerûn (Forgotten Realms).
-A data escolhida é ${bestDate} com os jogadores: ${playerNames}.
+  Você é um oráculo místico do mundo de Faerûn.
 
-Gere um presságio místico curto e impactante em português. Escolha aleatoriamente entre uma destas quatro categorias de destino:
-1. SORTE: Tymora (Senhora da Sorte) sorri para o grupo.
-2. AZAR: Beshaba (A Dama do Infortúnio) ou Talos (O Destruidor) lançam sua sombra.
-3. INDEFINIDO/NEUTRO: Oghma (O Escriba) ou Helm (O Vigilante) observam sem interferir.
-4. MELHOR NÃO SABER: Shar (A Senhora da Noite) ou Cyric (O Príncipe das Mentiras) ocultam o destino com névoas ou avisos sinistros de que a verdade é perigosa demais.
+  RETORNE APENAS UM JSON VÁLIDO.
+  NÃO inclua explicações, introduções ou texto fora do JSON.
 
-O texto deve ser curto, poético e usar nomes do panteão de Faerûn.
-`;
+  Formato obrigatório:
+  {
+    "oracleMessage": "texto do presságio"
+  }
+
+  Regras do texto:
+  - Curto (2 a 4 frases)
+  - Poético
+  - Em português
+  - Escolha UMA categoria:
+    - SORTE (Tymora)
+    - AZAR (Beshaba ou Talos)
+    - NEUTRO (Oghma ou Helm)
+    - MELHOR NÃO SABER (Shar ou Cyric)
+
+  Contexto:
+  Data: ${bestDate}
+  Jogadores: ${playerNames}
+  `;
 
   // 4️⃣ Chamar a API (backend)
   try {
