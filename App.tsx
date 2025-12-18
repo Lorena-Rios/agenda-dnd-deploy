@@ -315,7 +315,7 @@ const App: React.FC = () => {
             <div className="bg-[#0d1410]/95 border border-[#3E5F4A]/30 backdrop-blur-md px-6 py-2 rounded-full shadow-2xl pointer-events-auto flex items-center gap-3">
                 <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
                 <p className="text-[10px] text-slate-400 uppercase tracking-widest font-bold">
-                    Base de Dados • {Object.values(availability).flat().length} Presenças Registradas
+                    Base de Dados • {Object.values(availability).flat().length} Datas Registradas
                 </p>
             </div>
         </div>
