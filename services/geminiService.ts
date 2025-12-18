@@ -33,8 +33,9 @@ NÃO use markdown.
 NÃO use JSON.
 
 Regras:
-- 2 a 4 frases
+- 2 frases
 - Poético
+- Deve indicar se é um bom presságio, mau presságio, neutro ou incerto
 - Em português
 - Use UMA entidade:
   - Tymora (sorte)
