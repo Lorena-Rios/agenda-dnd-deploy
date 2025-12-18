@@ -108,7 +108,7 @@ const App: React.FC = () => {
     return (
       <div className="min-h-screen bg-[#0d1410] flex flex-col items-center justify-center gap-4">
         <Loader2 className="w-12 h-12 text-[#3E5F4A] animate-spin" />
-        <p className="rpg-font text-emerald-500 animate-pulse uppercase tracking-widest text-sm">Acessando Planos Dimensionais...</p>
+        <p className="rpg-font text-emerald-500 animate-pulse uppercase tracking-widest text-sm">Acessando os Planos...</p>
       </div>
     );
   }
@@ -123,7 +123,7 @@ const App: React.FC = () => {
                   alt="Dado d20"
                   className="w-8 h-8"
                 />
-            <h1 className="text-2xl font-bold rpg-font tracking-wider uppercase text-slate-100">Costa da Espada</h1>
+            <h1 className="text-2xl font-bold rpg-font tracking-wider uppercase text-slate-100">Aventura: Dragão do Pico da Ponta Gélida</h1>
           </div>
           
           <div className="flex bg-black/40 rounded-full p-1.5 gap-1 border border-[#3E5F4A]/40 shadow-inner">
