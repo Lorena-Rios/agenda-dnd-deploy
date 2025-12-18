@@ -62,7 +62,7 @@ Jogadores: ${playerNames}
 
     if (!response.ok) {
       console.error("Erro vindo da API:", data);
-      throw new Error(data?.details || data?.error || "Erro ao consultar o Oráculo");
+      throw new Error(data.oracleMessage || "O panteão não se move por caprichos mortais. Retorne quando seu destino for digno.");
     }
 
     return {
